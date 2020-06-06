@@ -1,0 +1,93 @@
+
+def mysqlUser="hkilinc";  // Change this to your database user name
+def mysqlPwd="swa";   // Change this to your database password
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+
+dependencies {
+
+	compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.6.3'
+	compile group: 'org.apache.derby', name: 'derby', version: '10.12.1.1'
+	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.47'
+
+	// https://mvnrepository.com/artifact/commons-io/commons-io
+	compile group: 'commons-io', name: 'commons-io', version: '2.5'
+
+
+	compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.23.2'
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: '2.23.2'
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.23.2'
+
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.1'
+	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.23.2'
+
+	compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+
+	compile "org.apache.logging.log4j:log4j-api:2.3"
+	compile "org.apache.logging.log4j:log4j-core:2.3"
+
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+
+
+task initdb (type:Exec) {
+	if ("".equals(mysqlUser) || "".equals(mysqlPwd)) {
+		throw new InvalidUserDataException("Please configure database access credentials at top of this build file!");
+	}
+    commandLine 'mysql',  '-u'+mysqlUser, '-p'+mysqlPwd, '-e source initdb.sql'
+
+    def metainfdir = projectDir.getAbsolutePath()+
+    					File.separator+'src'+
+					File.separator+'main'+
+					File.separator+'java'+
+					File.separator+'META-INF'+File.separator
+    	copy {
+    		from metainfdir+'persistence-template.xml'
+    		into metainfdir
+    		expand (MYSQLUSER: mysqlUser, MYSQLPWD: mysqlPwd)
+    		rename ('persistence-template.xml','persistence.xml')
+    		}
+}
+
+task initClient (type:Exec) {
+    workingDir new File(projectDir.getAbsolutePath()+File.separator+'src'+File.separator+'client')
+	commandLine 'npm',  'install', 'update'
+}
+
+task init () {
+	dependsOn initdb
+	dependsOn initClient
+}
+
+war {
+	manifest {
+		attributes 'Implementation-Title': 'Jodel',
+				   'Implementation-Version': version
+	}
+	archiveName = 'jodel.war'
+}
