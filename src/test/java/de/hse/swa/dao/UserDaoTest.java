@@ -12,8 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.hse.swa.PrepareTests;
-import de.hse.swa.model.Tuser;
-import de.hse.swa.model.Tcompany;
+import de.hse.swa.model.*;
 
 public class UserDaoTest {
 	
@@ -70,6 +69,7 @@ public class UserDaoTest {
 			user = new Tuser();
 			user.setUsername("Abdi. "+i);
 			user.setPassword("Test");
+			user.setTcompany(company);
 			u.saveUser(user) ;
 		}
 		List<Tuser> users = u.getUsers();
@@ -91,7 +91,17 @@ public class UserDaoTest {
 	@Test
 	public void testDeleteTusers() {
 		UserDao userDao = UserDao.getInstance();
+		ServicecontractDao s = ServicecontractDao.getInstance();
+		LicenseDao l = LicenseDao.getInstance();
+		List<Tlicense> licenses = l.getLicenses();
 		List<Tuser> users = userDao.getUsers();
+		List<Tservicecontract> scs = s.getSCs();
+		for (Tlicense license: licenses) {
+			l.deleteLicense(license.getIdlicense());
+		}
+		for (Tservicecontract sc: scs) {
+			s.deleteSC(sc.getIdservicecontract());
+		}
 		for (Tuser user: users) {
 			userDao.deleteUser(user.getIduser());
 		}

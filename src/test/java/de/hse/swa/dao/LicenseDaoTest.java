@@ -87,8 +87,8 @@ public class LicenseDaoTest {
 		Tlicense license;
 		for (int i=0; i < 10; ++i) {
 			license = new Tlicense();
-			license.setTservicecontract(servicecontract);
 			license.setLicensecount(i);
+			license.setTservicecontract(servicecontract);
 			ld.saveLicense(license);
 		}
 		List<Tlicense> licenses = ld.getLicenses();

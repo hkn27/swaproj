@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="swa">
 		<class>de.hse.swa.model.Tcompany</class>
-		<class>de.hse.swa.model.Tlicense</class>
-		<class>de.hse.swa.model.Tservicecontract</class>
 		<class>de.hse.swa.model.Tuser</class>
+		<class>de.hse.swa.model.Tservicecontract</class>
+		<class>de.hse.swa.model.Tlicense</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/SWADB?serverTimezone=UTC"/>
+			<property name="javax.persistence.jdbc.user" value="hkilinc" />
+			<property name="javax.persistence.jdbc.password" value="swa" />
+		</properties>
+	</persistence-unit>
+	<persistence-unit name="swaTest">
+		<class>de.hse.swa.model.Tcompany</class>
+		<class>de.hse.swa.model.Tuser</class>
+		<class>de.hse.swa.model.Tservicecontract</class>
+		<class>de.hse.swa.model.Tlicense</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/SWADB?serverTimezone=UTC"/>
+			<property name="javax.persistence.jdbc.user" value="hkilinc" />
+			<property name="javax.persistence.jdbc.password" value="swa" />
+ 
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode"
+					  value="database" />
+		</properties>
 	</persistence-unit>
 </persistence>

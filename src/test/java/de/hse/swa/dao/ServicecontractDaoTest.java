@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import de.hse.swa.PrepareTests;
 import de.hse.swa.model.Tcompany;
+import de.hse.swa.model.Tlicense;
 import de.hse.swa.model.Tuser;
 import de.hse.swa.model.Tservicecontract;
 
@@ -90,6 +91,7 @@ public class ServicecontractDaoTest {
 		Tservicecontract sc = new Tservicecontract();
 		sc.setTcompany(company);
 		sc.setTuser(user);
+		s.saveSC(sc);
 		Tservicecontract scs = s.getSC(sc.getIdservicecontract());
 		assertNotNull(scs);
 	}
@@ -97,7 +99,12 @@ public class ServicecontractDaoTest {
 	@Test
 	public void testDeleteTservicecontracts() {
 		ServicecontractDao s = ServicecontractDao.getInstance();
+		LicenseDao l = LicenseDao.getInstance();
+		List<Tlicense> licenses = l.getLicenses();
 		List<Tservicecontract> scs = s.getSCs();
+		for (Tlicense license: licenses) {
+			l.deleteLicense(license.getIdlicense());
+		}
 		for (Tservicecontract sc: scs) {
 			s.deleteSC(sc.getIdservicecontract());
 		}

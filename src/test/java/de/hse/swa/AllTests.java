@@ -7,20 +7,21 @@ import org.junit.runners.Suite.SuiteClasses;
 import de.hse.swa.dao.*;
 import de.hse.swa.resources.*;
 
-@RunWith(Suite.class)/*
+@RunWith(Suite.class)
 @SuiteClasses({DaoManagerTest.class,
-			   CommentDaoTest.class,
-			   PostDaoTest.class,
+			   CompanyDaoTest.class,
 			   UserDaoTest.class,
-			   VotingDaoTest.class,
+			   ServicecontractDaoTest.class,
+			   LicenseDaoTest.class,
+			   CompanyResourceTest.class,
+			   CompaniesResourceTest.class,
 			   UsersResourceTest.class,
 			   UserResourceTest.class,
-			   PostsResourceTest.class,
-			   PostResourceTest.class,
-			   CommentsResourceTest.class,
-			   CommentResourceTest.class,
-			   VotingsResourceTest.class})
-			   */
+			   ServicecontractResourceTest.class,
+			   ServicecontractsResourceTest.class,
+			   LicenseResourceTest.class,
+			   LicensesResourceTest.class})
+			
 public class AllTests {
 
 }

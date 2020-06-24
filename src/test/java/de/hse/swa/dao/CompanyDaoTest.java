@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.hse.swa.PrepareTests;
-import de.hse.swa.model.Tcompany;
+import de.hse.swa.model.*;
 
 public class CompanyDaoTest {
 
@@ -75,7 +75,22 @@ public class CompanyDaoTest {
 	@Test
 	public void testDeleteCompanies() {
 		CompanyDao companyDao = CompanyDao.getInstance();
+		UserDao userDao = UserDao.getInstance();
+		ServicecontractDao s = ServicecontractDao.getInstance();
+		LicenseDao l = LicenseDao.getInstance();
+		List<Tlicense> licenses = l.getLicenses();
+		List<Tuser> users = userDao.getUsers();
+		List<Tservicecontract> scs = s.getSCs();
 		List<Tcompany> companies = companyDao.getCompanies();
+		for (Tlicense license: licenses) {
+			l.deleteLicense(license.getIdlicense());
+		}
+		for (Tservicecontract sc: scs) {
+			s.deleteSC(sc.getIdservicecontract());
+		}
+		for (Tuser user: users) {
+			userDao.deleteUser(user.getIduser());
+		}
 		for (Tcompany company: companies) {
 			companyDao.deleteCompany(company.getIdcompany());
 		}

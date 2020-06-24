@@ -86,7 +86,7 @@ task init () {
 
 war {
 	manifest {
-		attributes 'Implementation-Title': 'Jodel',
+		attributes 'Implementation-Title': 'swa',
 				   'Implementation-Version': version
 	}
 	archiveName = 'jodel.war'

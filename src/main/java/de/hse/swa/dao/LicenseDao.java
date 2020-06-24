@@ -28,7 +28,7 @@ public class LicenseDao {
 	}
 	
 	public List<Tlicense> getLicenses() {
-		Query q = em.createQuery("select * from Tlicense ");
+		Query q = em.createQuery("SELECT l FROM Tlicense l");
 		List<Tlicense> licenses = q.getResultList();
 		return licenses;
 	}

@@ -8,7 +8,7 @@ public class DaoManager {
 	private static DaoManager dm;
 	private static EntityManager em;
 	
-	private static final String PERSISTENCE_UNIT_NAME = "swaproj_test";
+	private static final String PERSISTENCE_UNIT_NAME = "swa";
 	private static EntityManagerFactory factory;
 
 	private DaoManager() {
